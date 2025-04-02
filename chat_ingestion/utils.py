@@ -1,22 +1,24 @@
 import json
-import datetime
+from datetime import datetime
 
 DEBUG = True
 
-def create_message_obj(from_id, timestamp, text_value) -> dict:
+def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
     try:
+        dt = datetime.fromtimestamp(float(timestamp))
         return {
             "user": from_id,
-            "time": timestamp,
+            "time": dt.strftime("%d-%m-%Y, %H:%M"),
             "message": text_value
         }
     except Exception as e:
         print("error formatting message_obj")
         if DEBUG:
             print(e)
+        exit(1)
 
 
-def extract_by_id(from_id:str, filepath:str):
+def extract_by_id(from_id:str, filepath:str) -> list:
     extracted_texts = []
     with open(filepath, 'r') as file:
 
@@ -31,7 +33,7 @@ def extract_by_id(from_id:str, filepath:str):
             text_value = msg.get("text", None)
             timestamp = text_data.get("date_unixtime", None)
             if text_value != None:
-                message_obj = create_message_obj(from_id, timestamp, text_value)
+                message_obj = format_message_obj(from_id, timestamp, text_value)
                 extracted_texts.append(message_obj)
 
     return extracted_texts
@@ -53,7 +55,7 @@ def extract_all_messages(filepath:str) -> list:
             timestamp = msg.get("date_unixtime", None)
             from_id = msg.get("from_id", None)
             if text_value != None:
-                message_obj = create_message_obj(from_id, timestamp, text_value)
+                message_obj = format_message_obj(from_id, timestamp, text_value)
                 extracted_texts.append(message_obj)
 
     return extracted_texts
