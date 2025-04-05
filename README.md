@@ -1,20 +1,46 @@
-# chat-ingestion
+# llm-finetuning
 
-Python modules for ingesting exported chat logs from various social media platforms to be prepared as clean datasets for LLM fine-tuning.
+Python modules containing following services:
 
-## Roadmap
+- `ingestion`: ingesting exported chat logs from various social media platforms to be prepared as clean datasets for LLM fine-tuning.
+- `lora`: efficient finetuning technique suitable for consumer-grade GPUs.
 
-- [ ] add support for messenger
-- [ ] add support for group chats
-- [ ] add proper test framework
-- [ ] make more user-friendly
+## Supported ingestion formats
 
-## Supported formats
+- Telegram DM chats exported as json
 
-- Telegram chats in json format
+## Prerequisites
 
-## Testing
+- python 3.13
+- virtualenv
 
-```python
+## Development setup
+
+Create virtualenv in the root directory of this project:
+
+```sh
+python3 -m venv ./.venv
+```
+
+Activate virtualenv:
+
+```sh
+source .venv/bin/activate
+```
+
+Set environment variables:
+
+```sh
+export CHAT_INGESTION_DEFAULT_USERNAME="fr3nd"
+```
+
+## Running tests
+
+```sh
 python3 -m test.test_utils.py
 ```
+
+## Environment variables reference
+
+- `CHAT_INGESTION_DEFAULT_USERNAME`: set a preferred username for cases where the other user has deleted their account which when exported contains a null `from` field
+
