@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from os import getenv
 
 DEBUG = True
 
@@ -46,13 +47,22 @@ def extract_all_messages(filepath:str) -> list:
             # check if it is of type message
             if msg.get("type", None) != "message":
                 continue
-            # else we want to extract the text field
             text_value = msg.get("text", None)
+            # check if text_value is null
+            # if it is then put empty string
+            if text_value == None:
+                text_value = ""
             timestamp = msg.get("date_unixtime", None)
-            from_id = msg.get("from_id", None)
-            if text_value != None:
-                message_obj = format_message_obj(from_id, timestamp, text_value)
-                extracted_texts.append(message_obj)
+            # from_id = msg.get("from_id", None)
+            username = msg.get("from", None)
+            # check if `from` field is not null - this can be the case when user has deleted their account
+            # if it is then use default username
+            if username == None:
+                username = getenv("DEFAULT_USERNAME")
+                message_obj = format_message_obj(username, timestamp, text_value)
+            else:
+                message_obj = format_message_obj(username, timestamp, text_value)
+            extracted_texts.append(message_obj)
 
     return extracted_texts
 
