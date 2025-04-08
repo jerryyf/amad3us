@@ -37,7 +37,7 @@ export CHAT_INGESTION_DEFAULT_USERNAME="fr3nd"
 ## Running tests
 
 ```sh
-python3 -m test.test_utils.py
+python3 -m tests.test_utils.py
 ```
 
 ## Environment variables reference
