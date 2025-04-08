@@ -70,6 +70,26 @@ def extract_all_messages(filepath:str) -> list:
     return extracted_texts
 
 
+def combine_messages(all_msg:list) -> str:
+    # cat consecutive messages from the same user into one message
+    ret = ""
+    for i in range(len(all_msg)):
+        current_user = all_msg[i].get("user", None)
+
+        if i == 0:
+            ret += str(all_msg[i].get("text", None))
+
+        if i == len(all_msg) - 1:
+            break
+
+        # check if the next message is from the same user
+        if all_msg[i].get("user") == all_msg[i+1].get("user"):
+            ret += "\\n" + str(all_msg[i+1].get("text", None))
+        else:
+            ret += "\n" + str(all_msg[i+1].get("text", None))
+    return ret
+
+
 def format_jsonl(filepath:str, prompting_user:str) -> str:
     """returns a jsonl formatted string of all messages in the file. Replaces usernames with prompt and response.
 
