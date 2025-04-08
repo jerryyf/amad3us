@@ -1,8 +1,32 @@
 import json
 from datetime import datetime
 from os import getenv
+import pandas as pd
 
 DEBUG = True
+
+def format_prompt_obj(prompt:str, response:str, context:str) -> dict:
+    """creates a dict from message parameters, also formats the timestamp to a human readable format
+
+    Args:
+        from_id (str): user id
+        timestamp (str): unix timestamp
+        text_value (str): message content
+
+    Returns:
+        dict: dict containing parameters
+    """
+    try:
+        return {
+            "prompt": prompt,
+            "context": context,
+            "response": response
+        }
+    except Exception as e:
+        print("error formatting prompt_obj")
+        if DEBUG:
+            print(e)
+        exit(1)
 
 def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
     """creates a dict from message parameters, also formats the timestamp to a human readable format
@@ -39,7 +63,7 @@ def extract_all_messages(filepath:str) -> list:
     Returns:
         list: list of message objects
     """
-    extracted_texts = []
+    ret = []
 
     with open(filepath, "r") as file:
 
@@ -65,28 +89,55 @@ def extract_all_messages(filepath:str) -> list:
                 message_obj = format_message_obj(username, timestamp, text_value)
             else:
                 message_obj = format_message_obj(username, timestamp, text_value)
-            extracted_texts.append(message_obj)
+            ret.append(message_obj)
 
-    return extracted_texts
+    return ret
+
+def get_combined_messages_by_user(all_msg:list, user:str) -> list:
+    None
 
 
-def combine_messages(all_msg:list) -> str:
-    # cat consecutive messages from the same user into one message
-    ret = ""
+def combine_messages(all_msg:list, llm_user:str) -> list:
+    # cat consecutive messages from the same user into one message. return a list of dict
+    ret = []
+
+    data = {
+        "prompt": "",
+        "context": "",
+        "response": ""
+    }
+
     for i in range(len(all_msg)):
-        current_user = all_msg[i].get("user", None)
-
-        if i == 0:
-            ret += str(all_msg[i].get("text", None))
-
+        # break on last msg
         if i == len(all_msg) - 1:
             break
 
-        # check if the next message is from the same user
-        if all_msg[i].get("user") == all_msg[i+1].get("user"):
-            ret += "\\n" + str(all_msg[i+1].get("text", None))
-        else:
-            ret += "\n" + str(all_msg[i+1].get("text", None))
+        curr_user = all_msg[i].get("user", None)
+        next_user = all_msg[i+1].get("user", None)
+        curr_msg = all_msg[i].get("text", None)
+        next_msg = all_msg[i+1].get("text", None)
+
+
+        # if current msg is from the llm user it goes in prompt.
+        if curr_user == llm_user:
+            if data["prompt"] == "":
+                data["prompt"] += str(curr_msg)
+
+            # check if the next message is also from llm user. if so add it to the prompt
+            if next_user == llm_user:
+                data["prompt"] += "\\n" + str(next_msg)
+            # if it not it must be from the other user.
+            else:
+                ret.append(data)
+                data = {
+                    "prompt": "",
+                    "context": "",
+                    "response": ""
+                }
+                continue
+
+
+
     return ret
 
 
