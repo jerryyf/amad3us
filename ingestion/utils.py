@@ -5,7 +5,7 @@ from os import getenv
 DEBUG = True
 
 def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
-    """creates a dict from message parameters
+    """creates a dict from message parameters, also formats the timestamp to a human readable format
 
     Args:
         from_id (str): user id
@@ -20,7 +20,7 @@ def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
         return {
             "user": from_id,
             "time": dt.strftime("%d-%m-%Y, %H:%M"),
-            "message": text_value
+            "text": text_value
         }
     except Exception as e:
         print("error formatting message_obj")
@@ -28,16 +28,19 @@ def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
             print(e)
         exit(1)
 
+
 def extract_all_messages(filepath:str) -> list:
-    """main component for ingesting chat log exports
+    """preprocess a DM export
 
     Args:
         filepath (str): path of file
+        prompting_user (str): username of the user that should be considered as the one sending prompts
 
     Returns:
         list: list of message objects
     """
     extracted_texts = []
+
     with open(filepath, "r") as file:
 
         jsonfile = json.load(file)
@@ -66,16 +69,28 @@ def extract_all_messages(filepath:str) -> list:
 
     return extracted_texts
 
-def format_output(filepath:str) -> str:
-    """returns a formatted string of all messages in the file
+
+def format_jsonl(filepath:str, prompting_user:str) -> str:
+    """returns a jsonl formatted string of all messages in the file. Replaces usernames with prompt and response.
+
     Args:
         filepath (str): path of the file to be formatted
 
     Returns:
-        str: formatted string
+        str: formatted jsonl string
     """
     ret = ""
     all_msg = extract_all_messages(filepath)
+
     for i in range(len(all_msg)):
-        ret += f"{all_msg[i].get('user')} at {all_msg[i].get('time')}: {all_msg[i].get('message')}\n"
+        if all_msg[i].get("user") == prompting_user:
+            ret += '{'
+            ret += f'"prompt": "{all_msg[i].get('text')}"'
+            ret += '}\n'
+        else:
+            ret += '{'
+            ret += f'"response": "{all_msg[i].get('text')}"'
+            ret += '}\n'
+        # "timestamp": {all_msg[i].get('time')}:
+
     return ret
