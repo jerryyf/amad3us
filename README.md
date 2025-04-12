@@ -1,6 +1,4 @@
-# llm-finetuning
-
-Python modules containing following services:
+# fr3nd-ai
 
 - `ingestion`: ingesting exported chat logs from various social media platforms to be prepared as clean datasets for LLM fine-tuning.
 - `lora`: efficient finetuning technique suitable for consumer-grade GPUs.
@@ -16,7 +14,9 @@ Python modules containing following services:
 
 ## Development setup
 
-Create virtualenv in the root directory of this project:
+Add your exported sample.json file under the ingestion directory.
+
+Next create virtualenv in the root directory of this project:
 
 ```sh
 python3 -m venv ./.venv
@@ -28,16 +28,12 @@ Activate virtualenv:
 source .venv/bin/activate
 ```
 
-Set environment variables:
-
-```sh
-export CHAT_INGESTION_DEFAULT_USERNAME="fr3nd"
-```
-
 ## Running tests
 
+To run tests:
+
 ```sh
-python3 -m tests.test_utils.py
+python3 -m tests.test_tg
 ```
 
 ## Environment variables reference
