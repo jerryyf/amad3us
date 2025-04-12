@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 from os import getenv
-import pandas as pd
 
 DEBUG = True
 

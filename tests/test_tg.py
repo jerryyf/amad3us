@@ -5,5 +5,5 @@ message_list = extract_all_messages("ingestion/sample.json")
 
 # print(format_jsonl("ingestion/sample.json", "username"))
 
-cat_msg = combine_messages(message_list)
+cat_msg = combine_messages(message_list, "your-username")
 print(cat_msg)
