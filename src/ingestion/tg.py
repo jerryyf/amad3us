@@ -155,11 +155,11 @@ def format_jsonl(filepath:str, prompting_user:str) -> str:
     for i in range(len(all_msg)):
         if all_msg[i].get("user") == prompting_user:
             ret += '{'
-            ret += f'"prompt": "{all_msg[i].get('text')}"'
+            ret += f'"prompt": "{all_msg[i].get("text")}"'
             ret += '}\n'
         else:
             ret += '{'
-            ret += f'"response": "{all_msg[i].get('text')}"'
+            ret += f'"response": "{all_msg[i].get("text")}"'
             ret += '}\n'
         # "timestamp": {all_msg[i].get('time')}:
 
