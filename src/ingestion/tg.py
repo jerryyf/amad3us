@@ -1,25 +1,16 @@
 import json
 from datetime import datetime
 from os import getenv
+from queue import Queue
 
 DEBUG = True
 
 def format_prompt_obj(prompt:str, response:str, context:str) -> dict:
-    """creates a dict from message parameters, also formats the timestamp to a human readable format
-
-    Args:
-        from_id (str): user id
-        timestamp (str): unix timestamp
-        text_value (str): message content
-
-    Returns:
-        dict: dict containing parameters
-    """
     try:
         return {
             "prompt": prompt,
-            "context": context,
-            "response": response
+            "response": response,
+            "context": context
         }
     except Exception as e:
         print("error formatting prompt_obj")
@@ -28,16 +19,6 @@ def format_prompt_obj(prompt:str, response:str, context:str) -> dict:
         exit(1)
 
 def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
-    """creates a dict from message parameters, also formats the timestamp to a human readable format
-
-    Args:
-        from_id (str): user id
-        timestamp (str): unix timestamp
-        text_value (str): message content
-
-    Returns:
-        dict: dict containing parameters
-    """
     try:
         dt = datetime.fromtimestamp(float(timestamp))
         return {
@@ -53,15 +34,6 @@ def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
 
 
 def extract_all_messages(filepath:str) -> list:
-    """preprocess a DM export
-
-    Args:
-        filepath (str): path of file
-        prompting_user (str): username of the user that should be considered as the one sending prompts
-
-    Returns:
-        list: list of message objects
-    """
     ret = []
 
     with open(filepath, "r") as file:
@@ -92,51 +64,83 @@ def extract_all_messages(filepath:str) -> list:
 
     return ret
 
-def get_combined_messages_by_user(all_msg:list, user:str) -> list:
-    None
+def flush_msg_buf(buf:Queue) -> str:
+    ret = ""
+    while not buf.empty():
+        ret += f"{buf.get()}\n"
+    return ret
+
+def handle_user_order(all_msg:list) -> list:
+    ret = []
+    user_changed = False
+    for i in range(1, len(all_msg)):
+        curr_user = all_msg[i].get("user", None)
+        prev_user = all_msg[i-1].get("user", None)
+        curr_msg = all_msg[i].get("text", None)
+        prev_msg = all_msg[i-1].get("text", None)
+
+        if curr_user != prev_user and not user_changed:
+            ret.append(format_message_obj(all_msg[i].get("user"), "123456789", curr_msg))
+            user_changed = True
+
+        if user_changed:
+            ret.append(format_message_obj(all_msg[i].get("user"), "123456789", curr_msg))
+    
+    return ret
 
 
 def combine_messages(all_msg:list, llm_user:str) -> list:
     # cat consecutive messages from the same user into one message. return a list of dict
+
     ret = []
+    prompt_buf = Queue()
+    response_buf = Queue()
 
-    data = {
-        "prompt": "",
-        "context": "",
-        "response": ""
-    }
+    user_changed = 0
+    user_changed_internal = 0
+    prompt = ""
+    response = ""
+    context = ""
 
-    for i in range(len(all_msg)):
-        # break on last msg
-        if i == len(all_msg) - 1:
-            break
+    # for i in range(len(all_msg)):
+    for i in range(1, len(all_msg)):
+
+        # if len(all_msg) == 1:
+        #     ret.append(all_msg[0])
+        #     break
 
         curr_user = all_msg[i].get("user", None)
-        next_user = all_msg[i+1].get("user", None)
+        prev_user = all_msg[i-1].get("user", None)
         curr_msg = all_msg[i].get("text", None)
-        next_msg = all_msg[i+1].get("text", None)
 
+        # assume starts with non-llm user and len > 2
+        if curr_user != llm_user and user_changed_internal < 1:
+            continue
+        else:
+            user_changed_internal = 1
+        
+        if curr_user != prev_user:
+            user_changed += 1
 
-        # if current msg is from the llm user it goes in prompt.
+        # check if llm user or not and put in respective buffers
         if curr_user == llm_user:
-            if data["prompt"] == "":
-                data["prompt"] += str(curr_msg)
-
-            # check if the next message is also from llm user. if so add it to the prompt
-            if next_user == llm_user:
-                data["prompt"] += "\\n" + str(next_msg)
-            # if it not it must be from the other user.
-            else:
-                ret.append(data)
-                data = {
-                    "prompt": "",
-                    "context": "",
-                    "response": ""
-                }
-                continue
+            prompt_buf.put(curr_msg)
+        else:
+            response_buf.put(curr_msg)
 
 
-
+        # if user has changed an even number of times, append previous and start a new object
+        # if user changed at least once and is even, append pboject and start new object
+        if user_changed % 2 == 0 and user_changed > 0 and curr_user != prev_user:
+            print(user_changed)
+            prompt = flush_msg_buf(prompt_buf)
+            response = flush_msg_buf(response_buf)
+            print(response)
+            ret.append(format_prompt_obj(prompt, response, context))
+            prompt = ""
+            response = ""
+            context = ""
+        
     return ret
 
 
