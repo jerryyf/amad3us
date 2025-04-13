@@ -23,9 +23,21 @@ Activate virtualenv:
 source .venv/bin/activate
 ```
 
+Install requirements:
+
+```sh
+pip install -r requirements.txt
+```
+
+Create .env file:
+
+```sh
+echo TG_USERNAME="your-username" > .env
+```
+
 ## Running tests
 
-To run tests:
+Run in src directory:
 
 ```sh
 python3 -m tests.test_tg
