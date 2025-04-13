@@ -1,8 +1,10 @@
 import json
 from datetime import datetime
 from os import getenv
+from dotenv import load_dotenv
 from queue import Queue
 
+load_dotenv("../.env")
 DEBUG = True
 
 def format_prompt_obj(prompt:str, response:str, context:str) -> dict:
@@ -56,7 +58,7 @@ def extract_all_messages(filepath:str) -> list:
             # check if `from` field is not null - this can be the case when user has deleted their account
             # if it is then use default username
             if username == None:
-                username = getenv("DEFAULT_USERNAME")
+                username = getenv("TG_OTHER_USERNAME")
                 message_obj = format_message_obj(username, timestamp, text_value)
             else:
                 message_obj = format_message_obj(username, timestamp, text_value)
