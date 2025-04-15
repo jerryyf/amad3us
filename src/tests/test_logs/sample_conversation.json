@@ -1,0 +1,265 @@
+{
+    "name": "UserA",
+    "type": "personal_chat",
+    "id": 1000000001,
+    "messages": [
+      {
+        "id": 1,
+        "type": "service",
+        "date": "2023-07-03T00:48:43",
+        "date_unixtime": "1688309323",
+        "actor": "UserB",
+        "actor_id": "user1000000002",
+        "action": "set_messages_ttl",
+        "period": 2678400,
+        "text": "",
+        "text_entities": []
+      },
+      {
+        "id": 226,
+        "type": "service",
+        "date": "2023-07-04T09:15:10",
+        "date_unixtime": "1688426110",
+        "actor": "UserA",
+        "actor_id": "user1000000001",
+        "action": "set_messages_ttl",
+        "period": 0,
+        "text": "",
+        "text_entities": []
+      },
+      {
+        "id": 228,
+        "type": "message",
+        "date": "2023-07-08T00:15:53",
+        "date_unixtime": "1688739353",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "photo": "(File not included. Change data exporting settings to download.)",
+        "photo_file_size": 66622,
+        "width": 845,
+        "height": 1280,
+        "text": "",
+        "text_entities": []
+      },
+      {
+        "id": 229,
+        "type": "message",
+        "date": "2023-07-08T00:16:12",
+        "date_unixtime": "1688739372",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "220c per L but paid 179c per L",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "220c per L but paid 179c per L"
+          }
+        ]
+      },
+      {
+        "id": 230,
+        "type": "message",
+        "date": "2023-07-08T00:16:31",
+        "date_unixtime": "1688739391",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "Fuel lock hack too good",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Fuel lock hack too good"
+          }
+        ]
+      },
+      {
+        "id": 231,
+        "type": "message",
+        "date": "2023-07-08T00:27:24",
+        "date_unixtime": "1688740044",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": "Bro is that the VPN hack",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Bro is that the VPN hack"
+          }
+        ]
+      },
+      {
+        "id": 232,
+        "type": "message",
+        "date": "2023-07-08T00:27:29",
+        "date_unixtime": "1688740049",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": "Forgot how you do it",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Forgot how you do it"
+          }
+        ]
+      },
+      {
+        "id": 233,
+        "type": "message",
+        "date": "2023-07-08T00:50:40",
+        "date_unixtime": "1688741440",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "Location spoofing",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Location spoofing"
+          }
+        ]
+      },
+      {
+        "id": 234,
+        "type": "message",
+        "date": "2023-07-08T00:50:46",
+        "date_unixtime": "1688741446",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "Need a rooted phone tho",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Need a rooted phone tho"
+          }
+        ]
+      },
+      {
+        "id": 235,
+        "type": "message",
+        "date": "2023-07-08T00:51:27",
+        "date_unixtime": "1688741487",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": "Ah damn",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Ah damn"
+          }
+        ]
+      },
+      {
+        "id": 236,
+        "type": "message",
+        "date": "2023-07-08T01:00:30",
+        "date_unixtime": "1688742030",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "If u need a fuel lock lmk",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "If u need a fuel lock lmk"
+          }
+        ]
+      },
+      {
+        "id": 237,
+        "type": "message",
+        "date": "2023-07-08T01:01:03",
+        "date_unixtime": "1688742063",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "I'll lock on a random acc and u can sign in and use it on ur phone",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "I'll lock on a random acc and u can sign in and use it on ur phone"
+          }
+        ]
+      },
+      {
+        "id": 238,
+        "type": "message",
+        "date": "2023-07-08T01:01:06",
+        "date_unixtime": "1688742066",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": "I field up my car not long ago and I haven't driven since",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "I field up my car not long ago and I haven't driven since"
+          }
+        ]
+      },
+      {
+        "id": 239,
+        "type": "message",
+        "date": "2023-07-08T01:02:08",
+        "date_unixtime": "1688742128",
+        "from": "UserA",
+        "from_id": "user1000000001",
+        "text": "Damn how long have u not filled up for",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "Damn how long have u not filled up for"
+          }
+        ]
+      },
+      {
+        "id": 240,
+        "type": "message",
+        "date": "2023-07-08T02:21:59",
+        "date_unixtime": "1688746919",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": "First top up for the year",
+        "text_entities": [
+          {
+            "type": "plain",
+            "text": "First top up for the year"
+          }
+        ]
+      },
+      {
+        "id": 241,
+        "type": "message",
+        "date": "2023-07-12T04:11:41",
+        "date_unixtime": "1689099101",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": [
+          {
+            "type": "link",
+            "text": "https://www.example.com/video1"
+          }
+        ],
+        "text_entities": [
+          {
+            "type": "link",
+            "text": "https://www.example.com/video1"
+          }
+        ]
+      },
+      {
+        "id": 242,
+        "type": "message",
+        "date": "2023-07-12T04:22:03",
+        "date_unixtime": "1689099723",
+        "from": "UserB",
+        "from_id": "user1000000002",
+        "text": [
+          {
+            "type": "link",
+            "text": "https://www.example.com/video2"
+          }
+        ],
+        "text_entities": [
+          {
+            "type": "link",
+            "text": "https://www.example.com/video2"
+          }
+        ]
+      }
+    ]
+  }
