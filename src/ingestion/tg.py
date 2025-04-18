@@ -36,6 +36,11 @@ def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
 
 
 def extract_all_messages(filepath:str) -> list:
+    """returns list of dict containing message_obj.
+
+    message_obj keys: user, time, text
+
+    """
     ret = []
 
     with open(filepath, "r") as file:
@@ -79,14 +84,13 @@ def handle_user_order(all_msg:list) -> list:
         curr_user = all_msg[i].get("user", None)
         prev_user = all_msg[i-1].get("user", None)
         curr_msg = all_msg[i].get("text", None)
-        prev_msg = all_msg[i-1].get("text", None)
 
         if curr_user != prev_user and not user_changed:
-            ret.append(format_message_obj(all_msg[i].get("user"), "123456789", curr_msg))
+            ret.append(all_msg[i])
             user_changed = True
 
-        if user_changed:
-            ret.append(format_message_obj(all_msg[i].get("user"), "123456789", curr_msg))
+        elif user_changed:
+            ret.append(all_msg[i])
     
     return ret
 
@@ -107,9 +111,10 @@ def combine_messages(all_msg:list, llm_user:str) -> list:
     # for i in range(len(all_msg)):
     for i in range(1, len(all_msg)):
 
-        # if len(all_msg) == 1:
-        #     ret.append(all_msg[0])
-        #     break
+        # if only 1 message
+        if len(all_msg) == 1:
+            ret.append(all_msg[0])
+            break
 
         curr_user = all_msg[i].get("user", None)
         prev_user = all_msg[i-1].get("user", None)
@@ -146,27 +151,26 @@ def combine_messages(all_msg:list, llm_user:str) -> list:
     return ret
 
 
-def format_jsonl(filepath:str, prompting_user:str) -> str:
-    """returns a jsonl formatted string of all messages in the file. Replaces usernames with prompt and response.
+def format_jsonl(preprocessed: list) -> str:
+    """
+    Converts a list of preprocessed conversation objects into a JSONL formatted string.
 
     Args:
-        filepath (str): path of the file to be formatted
+        preprocessed (list): List of dicts with keys 'prompt', 'response', and 'context'.
 
     Returns:
-        str: formatted jsonl string
+        str: JSONL formatted string.
     """
     ret = ""
-    all_msg = extract_all_messages(filepath)
 
-    for i in range(len(all_msg)):
-        if all_msg[i].get("user") == prompting_user:
-            ret += '{'
-            ret += f'"prompt": "{all_msg[i].get('text')}"'
-            ret += '}\n'
-        else:
-            ret += '{'
-            ret += f'"response": "{all_msg[i].get('text')}"'
-            ret += '}\n'
-        # "timestamp": {all_msg[i].get('time')}:
+    for conversation in preprocessed:
+        try:
+            # Convert each conversation dict to a JSON string and append it with a newline
+            ret += json.dumps(conversation) + "\n"
+        except Exception as e:
+            print("Error serializing conversation to JSONL")
+            if DEBUG:
+                print(e)
+            exit(1)
 
     return ret

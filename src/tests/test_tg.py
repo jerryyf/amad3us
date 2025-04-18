@@ -14,4 +14,5 @@ tg_username = getenv("TG_USERNAME")
 message_list = handle_user_order(extract_all_messages("ingestion/sample.json"))
 
 cat_msg = combine_messages(message_list, tg_username)
-print(cat_msg)
+
+print(format_jsonl(cat_msg))
