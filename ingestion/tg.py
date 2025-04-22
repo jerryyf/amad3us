@@ -36,11 +36,6 @@ def format_message_obj(from_id:str, timestamp:str, text_value:str) -> dict:
 
 
 def extract_all_messages(filepath:str) -> list:
-    """returns list of dict containing message_obj.
-
-    message_obj keys: user, time, text
-
-    """
     ret = []
 
     with open(filepath, "r") as file:
