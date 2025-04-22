@@ -35,15 +35,15 @@ Create .env file:
 echo TG_USERNAME="your-username" > .env
 ```
 
-## Running tests
+## Testing
 
-Run in src directory:
+In project root directory:
 
 ```sh
-python3 -m tests.test_tg
+python3 -m unittest tests.test_tg
 ```
 
-## Supported ingestion formats
+## Supported formats for ingestion
 
 - Telegram DM chats exported as json
 
@@ -57,7 +57,3 @@ python3 -m tests.test_tg
 {'prompt': 'hi\nhows ur day', 'context': '', 'response': 'good thanks!\nhows urs'}
 {'prompt': 'mines good\nwyd today', 'context': '', 'response': 'im cleaning my room'}
 ```
-
-## Environment variables reference
-
-- `CHAT_INGESTION_DEFAULT_USERNAME`: set a preferred username for cases where the other user has deleted their account which when exported contains a null `from` field
