@@ -4,5 +4,5 @@ MVP: chat interface with LLM that mimics human behaviour. Use cases include crea
 
 ## Modules
 
-- agents
+- llm
 - ingestion
