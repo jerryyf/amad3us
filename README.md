@@ -1,18 +1,6 @@
-# llm-finetuning
+# fr3nd-ai
 
-Python modules containing following services:
-
-- `ingestion`: ingesting exported chat logs from various social media platforms to be prepared as clean datasets for LLM fine-tuning.
-- `lora`: efficient finetuning technique suitable for consumer-grade GPUs.
-
-## Supported ingestion formats
-
-- Telegram DM chats exported as json
-
-## Prerequisites
-
-- python 3.13
-- virtualenv
+LLM chatbot using ollama that mimics human chat behaviour, given existing chat log dumps.
 
 ## Development setup
 
@@ -28,19 +16,37 @@ Activate virtualenv:
 source .venv/bin/activate
 ```
 
-Set environment variables:
+Install requirements:
 
 ```sh
-export CHAT_INGESTION_DEFAULT_USERNAME="fr3nd"
+pip install -r requirements.txt
 ```
 
-## Running tests
+Create `.env` file in `llm` directory:
 
 ```sh
-python3 -m tests.test_utils.py
+echo TG_USERNAME="your-username" > llm/.env
 ```
 
-## Environment variables reference
+## Testing
 
-- `CHAT_INGESTION_DEFAULT_USERNAME`: set a preferred username for cases where the other user has deleted their account which when exported contains a null `from` field
+In project root directory:
 
+```sh
+python3 -m unittest tests.test_tg
+```
+
+## Integrations
+
+- Telegram
+
+## Roadmap
+
+- [x] Basic local CLI chat interface with memory of extracted message data
+- [ ] RAG to improve performance and larger context window
+- [ ] Direct access to Telegram API
+- [ ] Modularity
+- [ ] Chatbot API
+- [ ] Timezone awareness
+- [ ] Finetuning
+- [ ] Other data types
