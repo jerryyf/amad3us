@@ -62,5 +62,5 @@ Thumbs.db
 *.diff
 *.lock
 
-# Sample files
-*sample.json
+# Chat files
+*chat.json
