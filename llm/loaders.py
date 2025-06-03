@@ -15,3 +15,6 @@ def load_tg_chat_from_json(path:str, sender:str):
     )
     return messages[0]["messages"]
 
+
+def load_messenger_chat_from_json(path:str, sender:str):
+    return
