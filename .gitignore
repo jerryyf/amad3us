@@ -62,6 +62,5 @@ Thumbs.db
 *.diff
 *.lock
 
-# Chat files
-*chat.json
-facebook-*/
+# Data files
+data/
