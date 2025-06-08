@@ -1,0 +1,19 @@
+[project]
+name = "fr3nd-ai"
+version = "1.0.1"
+
+[tool.basedpyright]
+include = ["src"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+    "src/experimental",
+    "src/typestubs"
+]
+ignore = ["src/data"]
+typeCheckingMode = "off"
+
+reportMissingImports = "error"
+reportUnusedVariable = "true"
+
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
