@@ -1,6 +1,6 @@
 [project]
 name = "fr3nd-ai"
-version = "1.0.1"
+version = "1.0.2"
 
 [tool.basedpyright]
 include = ["src"]
@@ -13,7 +13,7 @@ ignore = ["src/data"]
 typeCheckingMode = "off"
 
 reportMissingImports = "error"
-reportUnusedVariable = "true"
+reportUnusedVariable = true
 
 pythonVersion = "3.12"
 pythonPlatform = "Linux"

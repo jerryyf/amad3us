@@ -38,8 +38,8 @@ jsonpointer==3.0.0
 jupyter_client==8.6.3
 jupyter_core==5.7.2
 langchain==0.3.25
-langchain-community==0.3.24
-langchain-core==0.3.61
+langchain-community==0.3.25
+langchain-core==0.3.65
 langchain-ollama==0.3.2
 langchain-postgres==0.0.14
 langchain-tavily==0.1.6
@@ -49,7 +49,7 @@ langgraph-checkpoint==2.0.26
 langgraph-checkpoint-sqlite==2.0.10
 langgraph-prebuilt==0.1.8
 langgraph-sdk==0.1.69
-langsmith==0.3.33
+langsmith==0.3.45
 lxml==5.4.0
 marshmallow==3.26.1
 matplotlib-inline==0.1.7
