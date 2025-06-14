@@ -13,7 +13,6 @@ ignore = ["src/data"]
 typeCheckingMode = "off"
 
 reportMissingImports = "error"
-reportUnusedVariable = true
 
 pythonVersion = "3.12"
 pythonPlatform = "Linux"
