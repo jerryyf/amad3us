@@ -1,6 +1,12 @@
 # fr3nd-ai
 
-LLM terminal-based chatbot framework leveraging LangChain and Ollama backend for ingesting chat logs and various other text data.
+LLM terminal-based chatbot framework leveraging LangChain and Ollama backend for ingesting chat logs and various other text data - privately.
+
+## Ollama setup
+
+```sh
+curl -fsSL https://ollama.com/install.sh | sh
+```
 
 ## Use cases
 
