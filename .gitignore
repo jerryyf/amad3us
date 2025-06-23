@@ -64,3 +64,6 @@ Thumbs.db
 
 # Data files
 data/
+
+# FAISS store
+faiss_index/
