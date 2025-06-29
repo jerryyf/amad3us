@@ -34,18 +34,22 @@ class VectorStore:
     def load_tg(
         self,
         data_path: str,
-        trim_size: int = 4,
         chunk_size: int = 200,
-        chunk_overlap: int = 10
+        chunk_overlap: int = 10,
+        *trim_size: int,
     ) -> list[Document]:
         loader = TelegramChatLoader(data_path)
         documents = loader.load()
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         all_splits = text_splitter.split_documents(documents)
+        print(f"Split into {len(all_splits)} sub-documents.")
 
-        trimmed = all_splits[:trim_size]
-        print(f"Trimmed into {len(trimmed)} sub-documents.")
-        return trimmed
+        if trim_size:
+            trimmed = all_splits[:trim_size]
+            print(f"Trimmed into {len(trimmed)} sub-documents.")
+            return trimmed
+        else:
+            return all_splits
 
     def add(self, documents: list[Document]) -> None:
         _ = self.vector_store.add_documents(documents=documents)
