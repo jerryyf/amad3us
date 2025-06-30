@@ -34,13 +34,13 @@ class VectorStore:
     def load_tg(
         self,
         data_path: str,
-        chunk_size: int = 2000,
+        chunk_size: int = 1000,
         chunk_overlap: int = 100,
         *trim_size: int,
     ) -> list[Document]:
         loader = TelegramChatLoader(data_path)
         documents = loader.load()
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n"], chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         all_splits = text_splitter.split_documents(documents)
         print(f"Split into {len(all_splits)} sub-documents.")
 

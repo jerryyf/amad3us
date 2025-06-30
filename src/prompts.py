@@ -3,8 +3,8 @@ from langchain_core.prompts import PromptTemplate
 
 def rag_prompt(query: str, context: str) -> list[BaseMessage]:
     prompt = PromptTemplate.from_template("""
-        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.
-        If you don't know the answer, say you don't know, but make a reasonable assumption based on the context.
+        You are an expert in psychoanalysis. Use the following pieces of chat logs as context to provide your responses.
+        Make a reasonable assumption based on the context if you are unsure.
         Use ten sentences maximum and keep the answer concise.
         Question: {question}
         Context: {context}

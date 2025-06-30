@@ -42,7 +42,7 @@ if __name__ == "__main__":
         async def chat_loop():
             while True:
                 query = input("you: ")
-                context = store.retrieve(query)
+                context = store.retrieve(query, 8)
                 input_messages = rag_prompt(query, context)
 
                 assert len(input_messages) == 1
