@@ -65,7 +65,7 @@ class VectorStore:
             allow_dangerous_deserialization=True
         )
 
-    def retrieve(self, query: str, k: int) -> dict:
+    def retrieve(self, query: str, k: int = 4) -> dict:
         retriever = self.vector_store.as_retriever(search_type="mmr", search_kwargs={"k": k})
         retrieved_docs = retriever.invoke(query)
         return {"context": retrieved_docs}

@@ -24,7 +24,7 @@ if __name__ == "__main__":
             ollama_url=OLLAMA_URL,
         )
 
-        store = VectorStore("./faiss_index", "llama3.2")
+        store = VectorStore("./faiss_index", "nomic-embed-text")
         if not os.path.exists("./faiss_index"):
             print("Directory 'faiss_index' not found. Creating vector store...")
             docs = store.load_tg(f"{data_path}/tg/result.json")
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         async def chat_loop():
             while True:
                 query = input("you: ")
-                context = store.retrieve(query, 20)
+                context = store.retrieve(query)
                 input_messages = rag_prompt(query, context)
 
                 assert len(input_messages) == 1
