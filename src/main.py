@@ -7,6 +7,7 @@ import asyncio
 from langchain_core.messages import HumanMessage, AIMessage
 from vectorstore import VectorStore
 from langchain import hub
+from prompts import rag_prompt
 
 load_dotenv()
 OLLAMA_MODEL = getenv(key="OLLAMA_MODEL", default="")
@@ -23,11 +24,11 @@ if __name__ == "__main__":
             ollama_url=OLLAMA_URL,
         )
 
-        store = VectorStore("./faiss_index", "llama3.2")
+        store = VectorStore("./faiss_index", "nomic-embed-text")
         if not os.path.exists("./faiss_index"):
             print("Directory 'faiss_index' not found. Creating vector store...")
-            docs = store.load_tg(f"{data_path}/tg_chat.json", 6)
-            print(docs)
+            docs = store.load_tg(f"{data_path}/tg/result.json")
+            # print(docs)
             store.add(docs)
             store.save()
         else:
@@ -37,16 +38,12 @@ if __name__ == "__main__":
         print("Store loaded")
 
         config = {"configurable": {"thread_id": "1"}}
-        prompt = hub.pull("rlm/rag-prompt")
 
         async def chat_loop():
             while True:
                 query = input("you: ")
-                context = store.retrieve(query, 4)
-
-                input_messages = prompt.invoke(
-                    {"context": context, "question": query}
-                ).to_messages()
+                context = store.retrieve(query, 8)
+                input_messages = rag_prompt(query, context)
 
                 assert len(input_messages) == 1
                 print(input_messages[0].content)

@@ -1,6 +1,6 @@
-# fr3nd-ai
+# amad3us
 
-LLM terminal-based chatbot framework leveraging LangChain and Ollama backend for ingesting chat logs and various other text data - privately.
+Open LLM framework built on top of LangChain and Ollama backend for processing sensitive personal data such as chat logs.
 
 ## Ollama setup
 
@@ -14,7 +14,8 @@ curl -fsSL https://ollama.com/install.sh | sh
 - Pattern recognition from personal data
 - Behavioural simulation
 - Message prediction
-- AI assisted self reflection
+- Perspective from a virtual third party
+- Self introspection
 
 ## Development setup
 
@@ -43,22 +44,30 @@ cd src
 touch .env
 ```
 
-Contents of the env file:
+## Configuration
+
+Configuration is specified through environment variables. Example:
 
 ```
-OLLAMA_MODEL="llama3.2:3b"
+OLLAMA_MODEL="deepseek-r1"
 OLLAMA_URL="localhost:11434"
 TG_SENDER="Deleted Account"
+APP_RUN_MODE="rag"
 ```
 
-Run the CLI app - default run_mode is set to `rag` - can be changed to `memory` (version 1.0.1).
+## Adding data
+
+The app looks for data files under `src/data`. To add exported Telegram chat logs for example, create the directory `src/data/tg/` and add JSON files there.
+
+## Usage
+
+Run the CLI app - default run_mode is set to `rag` - can be changed to `memory` for message prediction/behaviour simulation.
 
 ```sh
-cd src
 python3 main.py
 ```
 
-## App configuration
+## Tuning
 
 FAISS vector store creation time can vary greatly depending on your CPU. You may wish to adjust parameters `trim_size`, `chunk_size` and `chunk_overlap` from their default values depending on your hardware.
 
@@ -69,6 +78,7 @@ TODO
 ## Data integrations
 
 - Telegram chats
+- JSON
 
 ## Roadmap
 
@@ -79,3 +89,4 @@ TODO
 - [ ] Agents for web assistance
 - [ ] Finetuning
 - [ ] Support for majority of text data types
+- [ ] True persistent memory

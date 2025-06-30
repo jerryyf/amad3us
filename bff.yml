@@ -1,0 +1,45 @@
+openapi: 3.0.2
+info:
+  title: Chat API
+  description: A simple chat API
+  version: 1.0.0
+
+paths:
+  /chat:
+    get:
+      summary: Get a human message response from the BFF endpoint
+      operationId: getHumanMessageResponse
+      tags:
+        - Chat
+      responses:
+        '200':
+          description: Human message response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {"string"}
+
+    post:
+      summary: Send a human message request to the BFF endpoint
+      operationId: sendHumanMessageRequest
+      tags:
+        - Chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: {"string"}
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: {"string"}
