@@ -34,8 +34,8 @@ class VectorStore:
     def load_tg(
         self,
         data_path: str,
-        chunk_size: int = 200,
-        chunk_overlap: int = 10,
+        chunk_size: int = 2000,
+        chunk_overlap: int = 100,
         *trim_size: int,
     ) -> list[Document]:
         loader = TelegramChatLoader(data_path)
