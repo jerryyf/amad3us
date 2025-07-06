@@ -38,6 +38,7 @@ class VectorStore:
         chunk_overlap: int = 100,
         *trim_size: int,
     ) -> list[Document]:
+        print(f"Loading {data_path}...")
         loader = TelegramChatLoader(data_path)
         documents = loader.load()
         text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n"], chunk_size=chunk_size, chunk_overlap=chunk_overlap)
