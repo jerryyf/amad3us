@@ -27,9 +27,33 @@ if __name__ == "__main__":
         store = VectorStore("./faiss_index", "nomic-embed-text")
         if not os.path.exists("./faiss_index"):
             print("Directory 'faiss_index' not found. Creating vector store...")
-            docs = store.load_tg(f"{data_path}/tg/result.json")
-            # print(docs)
-            store.add(docs)
+
+            # try:
+            #     for filename in os.listdir(data_path):
+            #         # Construct the full file path
+            #         filepath = os.path.join(data_path, filename)
+
+            #         # Check if it's a file or directory
+            #         if os.path.isfile(filepath):
+            #             print(f"File found: {filepath}")
+            #             store.load_tg(filepath)
+            #         elif os.path.isdir(filepath):
+            #             print(f"Directory found: {filepath}. Skipping...")
+            #             # You could recursively loop through subdirectories here, if needed
+            #         else:
+            #             print(f"Unknown: {filepath}")
+            # except FileNotFoundError:
+            #     print(f"Directory not found: {filepath}")
+            # except Exception as e:
+            #     print(f"An error occurred: {e}")
+
+            telegram_data = ["chat1.json", "chat2.json", "chat3.json", "chat4.json"]
+
+            for file in telegram_data:
+                docs = store.load_tg(f"{data_path}/telegram/{file}")
+                # print(docs)
+                store.add(docs)
+
             store.save()
         else:
             print("Directory 'faiss_index' found. Loading store...")
