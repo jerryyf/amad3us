@@ -1,4 +1,4 @@
-# AMAD3US
+# alt
 
 Open LLM framework built on top of LangChain and Ollama backend for processing sensitive personal data such as chat logs.
 
